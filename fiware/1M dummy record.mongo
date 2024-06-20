@@ -17,6 +17,7 @@ let idCounter = 1;
 
 // Define a function to generate sequential IDs
 function getSequentialId() {
+  idCounter++;
   return "urn:ngsi-ld:Device:Battery" + idCounter.toString().padStart(6, '0');
 }
 
@@ -34,7 +35,7 @@ for (let i = 0; i < 1000000; i++) {
   let coordinates = getRandomCoordinates();
   documents.push({
     _id: {
-      id: getRandomId(),
+      id: getSequentialId(),
       type: "BatteryFunky",
       servicePath: "/"
     },
