@@ -1,7 +1,7 @@
 //To be runned inside mongosh
 
 // Connect to the MongoDB database
-use yourDatabaseName
+use orion
 
 // Define a function to generate random coordinates
 function getRandomCoordinates() {
@@ -59,12 +59,12 @@ for (let i = 0; i < 1000000; i++) {
 
   // Insert in batches of 1000 to avoid memory issues
   if (documents.length === 1000) {
-    db.yourCollectionName.insertMany(documents);
+    db.entities.insertMany(documents);
     documents = [];
   }
 }
 
 // Insert any remaining documents
 if (documents.length > 0) {
-  db.yourCollectionName.insertMany(documents);
+  db.entities.insertMany(documents);
 }
