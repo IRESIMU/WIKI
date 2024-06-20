@@ -12,7 +12,8 @@ function getRandomCoordinates() {
   ];
 }
 
-// Initialize a counter for sequential IDs
+// Initialize a counter for sequential IDs 
+//WE INTENTIONALLY not insert the id 1, so to have a NON existing value to search for
 let idCounter = 1;
 
 // Define a function to generate sequential IDs
