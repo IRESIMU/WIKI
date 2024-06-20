@@ -1,0 +1,70 @@
+//To be runned inside mongosh
+
+// Connect to the MongoDB database
+use yourDatabaseName
+
+// Define a function to generate random coordinates
+function getRandomCoordinates() {
+  return [
+    parseFloat((Math.random() * 360 - 180).toFixed(6)), // Longitude: -180 to 180
+    parseFloat((Math.random() * 180 - 90).toFixed(6))   // Latitude: -90 to 90
+  ];
+}
+
+// Define a function to generate random IDs
+function getRandomId() {
+  return "urn:ngsi-ld:Device:Battery" + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+}
+
+// Create an array to hold the documents
+let documents = [];
+
+// Generate one million documents
+for (let i = 0; i < 1000000; i++) {
+  documents.push({
+    id: getRandomId(),
+    type: "BatteryFunky",
+    category: {
+      type: "Text",
+      value: "battery"
+    },
+    Geppett: {
+      type: "whatever",
+      value: "miao"
+    },
+    chargingStatus: {
+      type: "Text",
+      value: "discharging"
+    },
+    location: {
+      type: "geo:json",
+      value: {
+        type: "Point",
+        coordinates: getRandomCoordinates()
+      }
+    },
+    houseId: {
+      type: "String",
+      value: "house" + Math.floor(Math.random() * 1000)
+    },
+    geppetto: {
+      type: "String",
+      value: "miao"
+    },
+    fishName: {
+      type: "List",
+      value: ["Marcello", "Ermenegisto"]
+    }
+  });
+
+  // Insert in batches of 1000 to avoid memory issues
+  if (documents.length === 1000) {
+    db.yourCollectionName.insertMany(documents);
+    documents = [];
+  }
+}
+
+// Insert any remaining documents
+if (documents.length > 0) {
+  db.yourCollectionName.insertMany(documents);
+}
