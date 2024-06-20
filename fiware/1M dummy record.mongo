@@ -3,6 +3,7 @@
 // Connect to the MongoDB database
 use orion
 
+
 // Define a function to generate random coordinates
 function getRandomCoordinates() {
   return [
@@ -11,9 +12,17 @@ function getRandomCoordinates() {
   ];
 }
 
-// Define a function to generate random IDs
-function getRandomId() {
-  return "urn:ngsi-ld:Device:Battery" + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+// Initialize a counter for sequential IDs
+let idCounter = 1;
+
+// Define a function to generate sequential IDs
+function getSequentialId() {
+  return "urn:ngsi-ld:Device:Battery" + idCounter.toString().padStart(6, '0');
+}
+
+// Get current timestamp
+function getTimestamp() {
+  return Date.now() / 1000;
 }
 
 // Create an array to hold the documents
@@ -21,40 +30,87 @@ let documents = [];
 
 // Generate one million documents
 for (let i = 0; i < 1000000; i++) {
+  let timestamp = getTimestamp();
+  let coordinates = getRandomCoordinates();
   documents.push({
-    id: getRandomId(),
-    type: "BatteryFunky",
-    category: {
-      type: "Text",
-      value: "battery"
+    _id: {
+      id: getRandomId(),
+      type: "BatteryFunky",
+      servicePath: "/"
     },
-    Geppett: {
-      type: "whatever",
-      value: "miao"
-    },
-    chargingStatus: {
-      type: "Text",
-      value: "discharging"
-    },
-    location: {
-      type: "geo:json",
-      value: {
-        type: "Point",
-        coordinates: getRandomCoordinates()
+    attrNames: [
+      "category",
+      "Geppett",
+      "chargingStatus",
+      "location",
+      "houseId",
+      "geppetto",
+      "fishName"
+    ],
+    attrs: {
+      category: {
+        value: "battery",
+        type: "Text",
+        creDate: timestamp,
+        modDate: timestamp,
+        mdNames: []
+      },
+      Geppett: {
+        value: "miao",
+        type: "whatever",
+        creDate: timestamp,
+        modDate: timestamp,
+        mdNames: []
+      },
+      chargingStatus: {
+        value: "discharging",
+        type: "Text",
+        creDate: timestamp,
+        modDate: timestamp,
+        mdNames: []
+      },
+      location: {
+        value: {
+          type: "Point",
+          coordinates: coordinates
+        },
+        type: "geo:json",
+        creDate: timestamp,
+        modDate: timestamp,
+        mdNames: []
+      },
+      houseId: {
+        value: "house" + Math.floor(Math.random() * 1000),
+        type: "String",
+        creDate: timestamp,
+        modDate: timestamp,
+        mdNames: []
+      },
+      geppetto: {
+        value: "miao",
+        type: "String",
+        creDate: timestamp,
+        modDate: timestamp,
+        mdNames: []
+      },
+      fishName: {
+        value: ["Marcello", "Ermenegisto"],
+        type: "List",
+        creDate: timestamp,
+        modDate: timestamp,
+        mdNames: []
       }
     },
-    houseId: {
-      type: "String",
-      value: "house" + Math.floor(Math.random() * 1000)
+    creDate: timestamp,
+    modDate: timestamp,
+    location: {
+      attrName: "location",
+      coords: {
+        type: "Point",
+        coordinates: coordinates
+      }
     },
-    geppetto: {
-      type: "String",
-      value: "miao"
-    },
-    fishName: {
-      type: "List",
-      value: ["Marcello", "Ermenegisto"]
-    }
+    lastCorrelator: "3585f980-2f14-11ef-b0b4-0242ac130003"
   });
 
   // Insert in batches of 1000 to avoid memory issues
