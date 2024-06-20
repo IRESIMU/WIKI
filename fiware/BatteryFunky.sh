@@ -1,5 +1,5 @@
 curl -iX POST \
-  'http://localhost:1026/v2/entities' \
+  'http://192.168.178.75:1026/v2/entities' \
   -H 'Content-Type: application/json' \
   -d '{
   "id": "urn:ngsi-ld:Device:Battery004",
@@ -8,9 +8,9 @@ curl -iX POST \
     "type": "Text",
     "value": "battery"
   },
-  "batteryLevel": {
-    "type": "Number",
-    "value": 100
+  "Geppett": {
+    "type": "whatever",
+    "value": "miao"
   },
   "chargingStatus": {
     "type": "Text",
@@ -23,20 +23,19 @@ curl -iX POST \
       "coordinates": [-3.7038, 40.4168]
     }
   },
-   "houseId": {
-      "type": "String",
-      "value": "house1"
-    },
-    "geppetto" : {
-		"type": "String",
-		"value": "miao"
-    },
-    "fishName": {
+  "houseId": {
+    "type": "String",
+    "value": "house1"
+  },
+  "geppetto": {
+    "type": "String",
+    "value": "miao"
+  },
+  "fishName": {
     "type": "List",
     "value": [
       "Marcello",
       "Ermenegisto"
     ]
   }
-
 }'
