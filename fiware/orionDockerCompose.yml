@@ -16,3 +16,4 @@ services:
     ports:
       - "27017:27017"  # Add this line to expose MongoDB port
 #run with docker-compose up -d
+#show log with docker-compose logs -f
