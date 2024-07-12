@@ -15,3 +15,4 @@ services:
     command: --nojournal
     ports:
       - "27017:27017"  # Add this line to expose MongoDB port
+#run with docker-compose up -d
