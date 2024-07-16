@@ -15,7 +15,9 @@ function loop(){
       var temp = status.temperature.tC;
       
       var statusJson = {
-        deviceId: mac,
+        type: "SmartPlug",
+        decoder: "shellyV1",
+        serial: mac,
         power: powerStatus,
         voltage: voltage,
         current: current,
@@ -25,16 +27,14 @@ function loop(){
       
       let pay = JSON.stringify(statusJson);
       
-      Shelly.call("HTTP.POST", {"url": "http://g1.carige.xyz/s2s.php", "body": pay, "timeout": 5});
+      //Shelly.call("HTTP.POST", {"url": "http://g1.carige.xyz/s2s.php", "body": pay, "timeout": 5});
+      Shelly.call("HTTP.POST", {"url": "http://192.168.178.51:8082/reading/V1", "body": pay, "timeout": 5});
+
       
-      /*
+
       // Print the power status to the console log
-      print("Power: " + powerStatus + " W");
-      print("Voltage: " + voltage + " V");
-      print("Current: " + current + " A");
-      print(aenergy);
-      print(temp);
-      */
+      print(statusJson);
+
     } else {
       // Print the error message to the console log
       print("Error fetching status: " + error_message);
@@ -43,4 +43,4 @@ function loop(){
  }
  
 loop()
-Timer.set(60 * 1000, true, loop);
+Timer.set(5 * 1000, true, loop);
