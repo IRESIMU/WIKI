@@ -1,0 +1,62 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "renew energy",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "batteryChecker",
+                    "slots": [],
+                    "samples": [
+                        "what is the battery charge level",
+                        "tell me the battery level"
+                    ]
+                },
+                {
+                    "name": "carBatteryChecker",
+                    "slots": [],
+                    "samples": [
+                        "what is the car charge level"
+                    ]
+                },
+                {
+                    "name": "carBatteryTimeToCharge",
+                    "slots": [],
+                    "samples": [
+                        "how long until car is full"
+                    ]
+                },
+                {
+                    "name": "greenEnergy",
+                    "slots": [],
+                    "samples": [
+                        "do we have green energy",
+                        "do we have excess energy",
+                        "is energy cheap now",
+                        "if energy is cheap now"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
