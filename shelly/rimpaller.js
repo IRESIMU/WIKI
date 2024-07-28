@@ -1,6 +1,10 @@
-//the EM sensor does not support scripting, we just ask another plug to do that for US! shoudl work until the ip changes -.-
 function loop() {
+  try {
     Shelly.call("HTTP.GET", {"url": "http://192.168.178.91/status", "timeout": 5}, function (response) {
+        if(response === undefined){
+          return;
+        }
+        
         if (response.code === 200) {
             try {
                 let jsonData = JSON.parse(response.body);
@@ -32,7 +36,11 @@ function loop() {
             print("Failed to fetch data from URL, response code:", response.code);
         }
     });
+    }catch (error){
+      return;
+    }
 };
 
 loop();
+
 Timer.set(5 * 60 * 1000, true, loop); // 5 minutes
