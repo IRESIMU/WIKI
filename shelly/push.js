@@ -19,6 +19,7 @@ function loop(){
       var statusJson = {
         type: "SmartPlug",
         decoder: "shellyV1",
+        name: name,
         serial: mac,
         power: powerStatus,
         voltage: voltage,
