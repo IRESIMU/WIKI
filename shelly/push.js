@@ -1,5 +1,7 @@
 function loop(){
-  const mac = Shelly.getDeviceInfo().mac;
+  const devInfo = Shelly.getDeviceInfo();
+  const mac = devInfo.mac;
+  const name = devInfo.name
   Shelly.call("Shelly.GetStatus", {}, function(result, error_code, error_message) {
     if (error_code === 0) {
       // Extract the relevant power status information
@@ -28,12 +30,12 @@ function loop(){
       let pay = JSON.stringify(statusJson);
       
       //Shelly.call("HTTP.POST", {"url": "http://g1.carige.xyz/s2s.php", "body": pay, "timeout": 5});
-      Shelly.call("HTTP.POST", {"url": "http://192.168.178.51:8082/reading/V1", "body": pay, "timeout": 5});
+      Shelly.call("HTTP.POST", {"url": "http://ds.seisho.us/reading/V1", "body": pay, "timeout": 5});
 
       
 
       // Print the power status to the console log
-      print(statusJson);
+//      print(statusJson);
 
     } else {
       // Print the error message to the console log
@@ -43,4 +45,4 @@ function loop(){
  }
  
 loop()
-Timer.set(5 * 1000, true, loop);
+Timer.set(60 * 5 * 1000, true, loop);
