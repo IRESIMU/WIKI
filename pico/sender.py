@@ -41,7 +41,12 @@ def connect_to_wifi():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     wlan.connect(ssid, password)
+    count = 0
     while not wlan.isconnected():
+        count += 1
+        if count > 15:
+            return False
+            
         led.value(1)
         print('Connecting to network...')
         time.sleep(0.5)
@@ -49,7 +54,7 @@ def connect_to_wifi():
         time.sleep(0.1)
     print('Network connected:', wlan.ifconfig())
     network.hostname("demoPico01")
-    return wlan
+    return True
 
 def disconnect_wifi():
     wlan = network.WLAN(network.STA_IF)
@@ -95,7 +100,8 @@ def sample_adc(t):
         sample_buffer = []
 
 def sendData(rms):
-    connect_to_wifi()
+    if not connect_to_wifi():
+        return False
     
     #we have a 1MOhm tension split, so we have to compensate for impedance of ADC with is 10M
     vsupply = (readOnce(psupply) * 2) * 1.06
@@ -148,4 +154,3 @@ while True:
     
     
     #machine.lightsleep(5000)
-
