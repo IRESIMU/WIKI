@@ -10,8 +10,9 @@ import json
 ssid = 'Warp Gate'
 password = 'entaroadun'
 
-#url = "http://ds.seisho.us/reading/meterV1"
-url = "http://192.168.178.52/logger.php"
+url = "http://ds.seisho.us/reading/meterV1"
+#url = "http://192.168.178.52/logger.php"
+#url = "http://192.168.178.52:8082/reading/meterV1"
 
 mId = machine.unique_id()
 mId = ubinascii.hexlify(mId).decode()
@@ -109,7 +110,7 @@ def sendData(rms):
     current = currentConv * rms
 
     data = {
-        "type": "meter",
+        "type": "Meter",
         "decoder": "meterV1",
         "name": name,
         "serial": mId,
@@ -120,7 +121,7 @@ def sendData(rms):
       };
     json_data = json.dumps(data)
     
-    response = urequests.post(url, data=json_data)
+    response = urequests.post(url, data=json_data, timeout=5)
 
     gc.collect()
         
@@ -136,8 +137,25 @@ def RMS(signal):
     rms2 = mean_square ** 0.5
     
     return rms2
-    
 
+def extended_lightsleep(seconds):
+    milliseconds = seconds * 1000
+    chunk = 1000  # 1 second chunks
+    for _ in range(milliseconds // chunk):
+        machine.lightsleep(chunk)
+    remaining = milliseconds % chunk
+    if remaining > 0:
+        machine.lightsleep(remaining)
+
+#first time we start we delay a bit so we have time to pause in case we want to debug, else the lightsleep will break thonny
+led.value(1)
+time.sleep(0.1)
+led.value(0)
+time.sleep(0.4)
+led.value(1)
+time.sleep(0.1)
+led.value(0)
+time.sleep(5)
 # Keep the script running
 while True:
     
@@ -149,8 +167,8 @@ while True:
     timer.init(freq=50000, mode=Timer.PERIODIC, callback=sample_adc)
     led.value(0)
     # Sleep to reduce CPU usage
-    
-    time.sleep(0.4)
-    
-    
-    #machine.lightsleep(5000)
+    #If before of lightsleep I do not normal sleep it wil hang!!!
+    time.sleep(1)
+    extended_lightsleep(120)
+
+
