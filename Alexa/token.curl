@@ -1,0 +1,6 @@
+curl --location 'https://api.amazon.com/auth/o2/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'grant_type=client_credentials' \
+--data-urlencode 'client_id=xxxxxxxx' \
+--data-urlencode 'client_secret=xxxxxxxxx' \
+--data-urlencode 'scope=alexa::proactive_events'
