@@ -1,3 +1,5 @@
+var lastAenergy = 0;
+
 function loop(){
   const devInfo = Shelly.getDeviceInfo();
   const mac = devInfo.mac;
@@ -10,10 +12,20 @@ function loop(){
       //print(result);
       let status = result["switch:0"];
       
+      let aenergy = 0;
+      let curEnergy = status.aenergy.total;
+      //if device was restarted
+      if(lastAenergy == 0){
+        //we will skip this increment
+        aenergy = 0;
+      }else{
+        aenergy = curEnergy - lastAenergy;
+      }
+      lastAenergy = curEnergy;
+      
       var powerStatus = status.apower;
       var voltage = status.voltage;
       var current = status.current;
-      var aenergy = status.aenergy;
       var temp = status.temperature.tC;
       
       var statusJson = {
@@ -36,7 +48,7 @@ function loop(){
       
 
       // Print the power status to the console log
-//      print(statusJson);
+            print(statusJson);
 
     } else {
       // Print the error message to the console log
